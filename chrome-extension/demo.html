@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MigMind Chrome Extension Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .demo-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8ecff 100%);
+            padding: 30px;
+            border-radius: 16px;
+            border: 2px solid #e1e5e9;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .installation-steps {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+        }
+
+        .installation-steps h3 {
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            padding: 16px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+
+        .demo-mockup {
+            background: #1a1a1a;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .browser-bar {
+            background: #333;
+            height: 40px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            margin-bottom: 16px;
+        }
+
+        .browser-dots {
+            display: flex;
+            gap: 8px;
+            margin-right: 16px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot.red { background: #ff5f57; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #28ca42; }
+
+        .url-bar {
+            background: #555;
+            border-radius: 6px;
+            padding: 8px 12px;
+            color: #ccc;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        .page-content {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            color: #333;
+        }
+
+        .ai-platforms {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .ai-platform {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8ecff 100%);
+            border-radius: 12px;
+            border: 2px solid #e1e5e9;
+            transition: all 0.2s ease;
+        }
+
+        .ai-platform:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .ai-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .chatgpt { background: linear-gradient(135deg, #10a37f 0%, #059669 100%); }
+        .claude { background: linear-gradient(135deg, #ff6b35 0%, #e55527 100%); }
+        .gemini { background: linear-gradient(135deg, #4285f4 0%, #1a73e8 100%); }
+
+        .download-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .tech-specs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .spec-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .spec-item h4 {
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .spec-item p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .demo-section {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 MigMind AI Assistant</h1>
+            <p>Chrome Extension for Quick AI Platform Access from MigMind Prompts</p>
+        </div>
+
+        <div class="demo-section">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L13.09 8.26L16 8.5L13.09 8.74L12 15L10.91 8.74L8 8.5L10.91 8.26L12 2Z"/>
+                        </svg>
+                    </div>
+                    <h3>One-Click AI Access</h3>
+                    <p>Adds a smart "Ask AI" button that appears near like buttons on MigMind prompt pages for instant access to AI platforms.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3>Smart Clipboard Integration</h3>
+                    <p>Automatically detects your last copied text and seamlessly integrates it with your chosen AI platform.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </div>
+                    <h3>Multiple AI Platforms</h3>
+                    <p>Support for ChatGPT, Claude, and Gemini with automatic content injection and smart text area detection.</p>
+                </div>
+            </div>
+
+            <div class="demo-mockup">
+                <div class="browser-bar">
+                    <div class="browser-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <div class="url-bar">https://migmind.com/prompts/creative-writing-prompt</div>
+                </div>
+                <div class="page-content">
+                    <h2>Creative Writing Prompt</h2>
+                    <p>Write a short story about a time traveler who accidentally changes history...</p>
+                    <div style="margin-top: 20px; display: flex; gap: 10px; align-items: center;">
+                        <button style="background: #e1e5e9; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;">👍 Like</button>
+                        <button class="migmind-ai-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2L13.09 8.26L16 8.5L13.09 8.74L12 15L10.91 8.74L8 8.5L10.91 8.26L12 2Z"/>
+                            </svg>
+                            Ask AI
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ai-platforms">
+                <div class="ai-platform">
+                    <div class="ai-logo chatgpt">GPT</div>
+                    <h4>ChatGPT</h4>
+                    <p>OpenAI's conversational AI</p>
+                </div>
+                <div class="ai-platform">
+                    <div class="ai-logo claude">C</div>
+                    <h4>Claude</h4>
+                    <p>Anthropic's helpful AI</p>
+                </div>
+                <div class="ai-platform">
+                    <div class="ai-logo gemini">G</div>
+                    <h4>Gemini</h4>
+                    <p>Google's advanced AI</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <div class="installation-steps">
+                <h3>📦 Installation Steps</h3>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <strong>Download the Extension</strong>
+                        <p>Download the chrome-extension folder from the project files</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <strong>Open Chrome Extensions</strong>
+                        <p>Navigate to <code>chrome://extensions/</code> in your Chrome browser</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <strong>Enable Developer Mode</strong>
+                        <p>Toggle "Developer mode" switch in the top right corner</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div>
+                        <strong>Load Extension</strong>
+                        <p>Click "Load unpacked" and select the chrome-extension folder</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div>
+                        <strong>Start Using</strong>
+                        <p>Visit migmind.com/prompts/* pages and look for the "Ask AI" button!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tech-specs">
+                <div class="spec-item">
+                    <h4>🏗️ Architecture</h4>
+                    <p>Built with Manifest V3, modern content scripts, and service worker</p>
+                </div>
+                <div class="spec-item">
+                    <h4>🔒 Privacy</h4>
+                    <p>Only accesses clipboard when you click the AI button. No data stored.</p>
+                </div>
+                <div class="spec-item">
+                    <h4>🎨 Design</h4>
+                    <p>Modern UI with smooth animations and responsive design</p>
+                </div>
+                <div class="spec-item">
+                    <h4>⚡ Performance</h4>
+                    <p>Lightweight, fast loading, and minimal resource usage</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="#" class="download-btn">📥 Ready to Install</a>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .migmind-ai-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
+        }
+
+        .migmind-ai-btn:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+    </style>
+</body>
+</html>
